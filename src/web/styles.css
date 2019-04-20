@@ -1,0 +1,86 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    background: #212225;
+    -webkit-user-select: none;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 13px;
+    line-height: 1.5;
+    color: #fff;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+nav {
+    border-bottom: 1px solid #161619;
+    background: #1b1c1f;
+    height: 36px;
+    line-height: 37px;
+    -webkit-app-region: drag;
+}
+
+nav ul,
+nav li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+nav ul {
+    display: flex;
+    padding: 0 90px;
+    overflow: auto;
+    flex-wrap: nowrap;
+}
+
+nav ul:after {
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-image: linear-gradient(90deg, rgba(27, 28, 31, 0.8) 75%, rgba(0,0,0,0) 100%);
+    content: '';
+    width: 100px;
+    height: 36px;
+    pointer-events: none;
+}
+
+nav ul:before {
+    position: fixed;
+    right: 0;
+    top: 0;
+    background-image: linear-gradient(-90deg, rgba(27, 28, 31, 0.8) 0, rgba(0,0,0,0) 100%);
+    content: '';
+    width: 48px;
+    height: 36px;
+    pointer-events: none;
+}
+
+nav li {
+    padding: 0 12px;
+    color: #9b9b9b;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+nav li:hover {
+    color: #eee;
+}
+
+nav li.active {
+    color: #fff;
+    font-weight: 600;
+}
+
+nav ::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.inner {
+    padding: 34px 40px;
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

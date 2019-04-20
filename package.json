@@ -1,0 +1,31 @@
+{
+  "name": "things-stats",
+  "version": "1.0.0",
+  "description": "Showing you stats about your Things tasks.",
+  "main": "src/index.js",
+  "author": "Thomas Schoffelen <thomas@schof.co>",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dev": "nodemon --watch src/* --exec 'electron .'",
+    "postinstall": "electron-builder install-app-deps",
+    "build": "electron-builder --mac"
+  },
+  "devDependencies": {
+    "electron": "^4.1.4",
+    "electron-builder": "^20.39.0",
+    "nodemon": "^1.18.11"
+  },
+  "dependencies": {
+    "moment": "^2.24.0",
+    "sqlite3": "^4.0.6"
+  },
+  "build": {
+    "appId": "co.schof.labs.things-stats",
+    "productName": "Things Stats",
+    "copyright": "Copyright © 2019 Thomas Schoffelen",
+    "mac": {
+      "icon": "build/icon.icns"
+    }
+  }
+}
