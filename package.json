@@ -9,7 +9,8 @@
     "start": "electron .",
     "dev": "nodemon --watch src/* --exec 'electron .'",
     "postinstall": "electron-builder install-app-deps",
-    "build": "electron-builder --mac"
+    "build": "electron-builder --mac",
+    "release": "build"
   },
   "devDependencies": {
     "electron": "^4.1.4",
@@ -23,9 +24,12 @@
   "build": {
     "appId": "co.schof.labs.things-stats",
     "productName": "Things Stats",
-    "copyright": "Copyright © 2019 Thomas Schoffelen",
+    "copyright": "Copyright © 2020 Thomas Schoffelen",
     "mac": {
-      "icon": "build/icon.icns"
+      "icon": "build/icon.icns",
+      "target": ["zip"],
+      "publish": ["github"],
+      "darkModeSupport": true
     }
   }
 }
