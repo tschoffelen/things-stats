@@ -40,8 +40,8 @@ ipcMain.on('query', getTasks)
 const createWindow = () => {
   // Create the browser window.
   win = new BrowserWindow({
-    width: 600,
-    height: 500,
+    width: 650,
+    height: 550,
     title: 'Things Stats',
     titleBarStyle: 'hiddenInset',
     backgroundColor: '#212225',
@@ -74,11 +74,7 @@ app.on('ready', createWindow)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+  app.quit()
 })
 
 app.on('activate', () => {
