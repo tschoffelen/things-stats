@@ -38,7 +38,7 @@ nav ul:after {
     position: fixed;
     left: 0;
     top: 0;
-    background-image: linear-gradient(90deg, rgba(27, 28, 31, 0.8) 75%, rgba(0,0,0,0) 100%);
+    background-image: linear-gradient(90deg, rgba(27, 28, 31, 0.8) 75%, rgba(0, 0, 0, 0) 100%);
     content: '';
     width: 100px;
     height: 36px;
@@ -49,7 +49,7 @@ nav ul:before {
     position: fixed;
     right: 0;
     top: 0;
-    background-image: linear-gradient(-90deg, rgba(27, 28, 31, 0.8) 0, rgba(0,0,0,0) 100%);
+    background-image: linear-gradient(-90deg, rgba(27, 28, 31, 0.8) 0, rgba(0, 0, 0, 0) 100%);
     content: '';
     width: 48px;
     height: 36px;
@@ -77,10 +77,83 @@ nav ::-webkit-scrollbar {
 }
 
 .inner {
-    padding: 34px 40px;
     flex: 1;
     overflow: auto;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.graph-outer {
+    padding: 34px 40px;
+    flex: 1;
+    display: flex;
+}
+
+.calendar-outer {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    flex-wrap: wrap;
+    flex: 1;
+    padding-top: 36px;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.calendar-day {
+    flex-basis: calc(100% / 7);
+    height: 21%;
+    box-sizing: border-box;
+    border-right: 0.2px solid #1b1c1f;
+    border-bottom: 0.2px solid #1b1c1f;
+    align-items: center;
+    justify-content: flex-start;
+    display: flex;
+    flex-direction: column;
+    padding: 6px;
+}
+
+.calendar-date {
+    font-size: 10px;
+    color: #777;
+    font-weight: 500;
+}
+
+.calendar-inner {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.calendar-inner span {
+    display: inline-block;
+    padding: 3px 8px;
+    background: #1b1c1f no-repeat 8px 50%;
+    background-size: 12px;
+    border-radius: 24px;
+    line-height: 16px;
+    margin-top: 3px;
+    padding-left: 25px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.calendar-inner .calendar-tasks {
+    color: #f9d448;
+    background-image: url("./images/scheduled.png");
+}
+
+.calendar-inner .calendar-deadlines {
+    color: #e63958;
+    background-image: url("./images/deadline.png");
+}
+
+.calendar-inner .calendar-repeating {
+    color: #4dabf1;
+    background-image: url("./images/repeating.png");
 }

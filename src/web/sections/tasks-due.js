@@ -1,7 +1,7 @@
 const moment = require('moment')
 
 module.exports = {
-  title: 'Upcoming due dates',
+  title: 'Due dates',
   render: async () => {
     let rows = await db.query('SELECT start, startDate FROM TMTask WHERE type = 0 AND status = 0')
     let months = {

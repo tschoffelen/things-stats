@@ -25,6 +25,7 @@ window.db = {
 const sections = [
   require('./sections/task-status'),
   require('./sections/tasks-due'),
+  require('./sections/tasks-calendar'),
   require('./sections/tasks-completed'),
   require('./sections/tasks-weekday')
 ]
@@ -35,7 +36,7 @@ const $body = $('.inner')
 const renderSection = async (sectionIndex) => {
   const section = sections[sectionIndex]
 
-  $body.html('<canvas id="myChart" width="400" height="300"></canvas>')
+  $body.html('<div class="graph-outer"><canvas id="myChart" width="400" height="300"></canvas></div>')
   $nav.find('.active').removeClass('active')
   const $item = $nav.find('li:nth-child(' + (sectionIndex + 1) + ')')
   $item.addClass('active')
@@ -44,13 +45,20 @@ const renderSection = async (sectionIndex) => {
 
   const data = await section.render()
 
-  const ctx = document.getElementById('myChart').getContext('2d')
-  new Chart(ctx, data)
+  if (typeof data === 'object') {
+    const ctx = document.getElementById('myChart').getContext('2d')
+    new Chart(ctx, data)
+  } else {
+    $body.html(data)
+  }
 }
 
 sections.forEach((section, index) => {
-  $nav.append('<li' + (!index ? ' class="active"' : '') + ' onclick="renderSection(' + index + ')">' +
-    section.title + '</li>')
+  $nav.append(
+    '<li' + (!index ? ' class="active"' : '') + ' onclick="renderSection(' + index + ')">' +
+    section.title +
+    '</li>'
+  )
 })
 
 $nav.append('<span>&nbsp;&nbsp;&nbsp;</span>')
