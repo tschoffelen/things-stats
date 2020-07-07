@@ -1,6 +1,7 @@
 {
   "name": "things-stats",
   "version": "1.0.1",
+  "private": true,
   "description": "Showing you stats about your Things tasks.",
   "main": "src/index.js",
   "author": "Thomas Schoffelen <thomas@schof.co>",
@@ -12,8 +13,8 @@
     "clean:dist": "rimraf ./dist/*",
     "build": "npm run clean:dist && electron-builder --mac -p never",
     "build:mas": "npm run clean:dist && electron-builder --mac mas -p never",
-    "publish:mac:mas": "npm run dist:mac:mas && npm run upload:mas",
-    "upload:mas": "dotenv && xcrun altool --upload-app --type osx --file \"$(find ./dist/mas/Bitwarden*.pkg)\" --username $APPLEID --password $APPLEIDPASS",
+    "pub": "npm run build:mas && npm run upload:mas",
+    "upload:mas": "source .env && xcrun altool --upload-app --type osx --file \"$(find ./dist/mas/Bitwarden*.pkg)\" --username $APPLEID --password $APPLEIDPASS",
     "release": "build"
   },
   "devDependencies": {
