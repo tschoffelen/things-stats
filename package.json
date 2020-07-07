@@ -1,6 +1,6 @@
 {
   "name": "things-stats",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Showing you stats about your Things tasks.",
   "main": "src/index.js",
   "author": "Thomas Schoffelen <thomas@schof.co>",
@@ -27,8 +27,12 @@
     "copyright": "Copyright © 2020 Thomas Schoffelen",
     "mac": {
       "icon": "build/icon.icns",
-      "target": ["zip"],
-      "publish": ["github"],
+      "target": [
+        "zip"
+      ],
+      "publish": [
+        "github"
+      ],
       "darkModeSupport": true
     }
   }
