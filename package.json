@@ -15,6 +15,7 @@
   "devDependencies": {
     "electron": "^7.2.4",
     "electron-builder": "^20.39.0",
+    "electron-notarize": "^0.2.1",
     "nodemon": "^1.18.11"
   },
   "dependencies": {
@@ -22,7 +23,7 @@
     "sqlite3": "^4.0.6"
   },
   "build": {
-    "appId": "co.schof.labs.things-stats",
+    "appId": "co.schof.things-stats",
     "productName": "Things Stats",
     "copyright": "Copyright © 2020 Thomas Schoffelen",
     "mac": {
@@ -33,7 +34,12 @@
       "publish": [
         "github"
       ],
-      "darkModeSupport": true
+      "identity": "Apple Distribution: Thomas Schoffelen (AGKMBZTN3K)",
+      "darkModeSupport": true,
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "./build/entitlements.mac.inherit.plist",
+      "entitlementsInherit": "./build/entitlements.mac.inherit.plist"
     }
   }
 }
