@@ -9,23 +9,29 @@
     "start": "electron .",
     "dev": "nodemon --watch src/* --exec 'electron .'",
     "postinstall": "electron-builder install-app-deps",
-    "build": "electron-builder --mac",
+    "clean:dist": "rimraf ./dist/*",
+    "build": "npm run clean:dist && electron-builder --mac -p never",
+    "build:mas": "npm run clean:dist && electron-builder --mac mas -p never",
+    "publish:mac:mas": "npm run dist:mac:mas && npm run upload:mas",
+    "upload:mas": "dotenv && xcrun altool --upload-app --type osx --file \"$(find ./dist/mas/Bitwarden*.pkg)\" --username $APPLEID --password $APPLEIDPASS",
     "release": "build"
   },
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "electron": "^7.2.4",
-    "electron-builder": "^20.39.0",
-    "electron-notarize": "^0.2.1",
+    "electron-builder": "^22.7.0",
+    "electron-notarize": "^1.0.0",
     "nodemon": "^1.18.11"
   },
   "dependencies": {
     "moment": "^2.24.0",
-    "sqlite3": "^4.0.6"
+    "sqlite3": "^5.0.0"
   },
   "build": {
     "appId": "co.schof.things-stats",
     "productName": "Things Stats",
     "copyright": "Copyright © 2020 Thomas Schoffelen",
+    "afterSign": "build/after-sign.js",
     "mac": {
       "icon": "build/icon.icns",
       "target": [
@@ -34,12 +40,24 @@
       "publish": [
         "github"
       ],
-      "identity": "Apple Distribution: Thomas Schoffelen (AGKMBZTN3K)",
+      "category": "public.app-category.productivity",
+      "identity": "Thomas Schoffelen (AGKMBZTN3K)",
       "darkModeSupport": true,
-      "hardenedRuntime": true,
       "gatekeeperAssess": false,
-      "entitlements": "./build/entitlements.mac.inherit.plist",
-      "entitlementsInherit": "./build/entitlements.mac.inherit.plist"
+      "hardenedRuntime": true,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "extendInfo": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "mas": {
+      "entitlements": "build/entitlements.mas.plist",
+      "entitlementsInherit": "build/entitlements.mas.inherit.plist",
+      "hardenedRuntime": false,
+      "asarUnpack": [
+        "node_modules/sqlite3"
+      ]
     }
   }
 }
