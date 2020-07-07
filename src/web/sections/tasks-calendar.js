@@ -4,17 +4,17 @@ module.exports = {
   title: 'Calendar',
   render: async () => {
     let startDate = moment().startOf('isoWeek').unix()
-    let endDate = moment().startOf('isoWeek').add(8 * 7, 'days').unix()
+    let endDate = moment().startOf('isoWeek').add(5 * 7, 'days').unix()
     let rows = await db.query(`
-      SELECT 
+      SELECT
         title,
         startDate,
         nextInstanceStartDate,
         dueDate
-      FROM TMTask 
-      WHERE 
-        type = 0 AND 
-        status = 0 AND 
+      FROM TMTask
+      WHERE
+        type = 0 AND
+        status = 0 AND
         trashed = 0 AND
         (startDate <= ${endDate} OR dueDate <= ${endDate} OR nextInstanceStartDate <= ${endDate})
     `)

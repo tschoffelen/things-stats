@@ -88,22 +88,19 @@ nav ::-webkit-scrollbar {
     padding: 34px 40px;
     flex: 1;
     display: flex;
+    height: 100%;
 }
 
 .calendar-outer {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    border-top: 0.2px solid #1b1c1f;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(5, 1fr);
     height: 100%;
-    flex-wrap: wrap;
     flex: 1;
-    padding-top: 36px;
-    align-items: flex-start;
-    justify-content: flex-start;
 }
 
 .calendar-day {
-    flex-basis: calc(100% / 7);
-    height: 21%;
     box-sizing: border-box;
     border-right: 0.2px solid #1b1c1f;
     border-bottom: 0.2px solid #1b1c1f;
