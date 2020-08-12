@@ -5,9 +5,7 @@ const os = require('os')
 
 let win
 
-const dbPath = os.homedir() +
-  '/Library/Containers/com.culturedcode.ThingsMac/Data/Library/' +
-  'Application Support/Cultured Code/Things/Things.sqlite3'
+const dbPath = os.homedir() + '/Library/Group Containers/JLMPQHK86H.com.culturedcode.ThingsMac/Things.sqlite3'
 
 const getTasks = (event, arg) => {
   const db = new sqlite3.Database(path.resolve(dbPath), (err) => {
@@ -84,6 +82,3 @@ app.on('activate', () => {
     createWindow()
   }
 })
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.

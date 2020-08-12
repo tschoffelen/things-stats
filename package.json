@@ -1,6 +1,6 @@
 {
   "name": "things-stats",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "description": "Showing you stats about your Things tasks.",
   "main": "src/index.js",
@@ -11,11 +11,11 @@
     "dev": "nodemon --watch src/* --exec 'electron .'",
     "postinstall": "electron-builder install-app-deps",
     "clean:dist": "rimraf ./dist/*",
-    "build": "npm run clean:dist && electron-builder --mac -p never",
-    "build:mas": "npm run clean:dist && electron-builder --mac mas -p never",
-    "pub": "npm run build:mas && npm run upload:mas",
+    "build": "yarn clean:dist && electron-builder --mac -p never",
+    "build:mas": "yarn clean:dist && electron-builder --mac mas -p never",
+    "pub": "yarn build:mas && yarn upload:mas",
     "upload:mas": "source .env && xcrun altool --upload-app --type osx --file \"$(find ./dist/mas/Bitwarden*.pkg)\" --username $APPLEID --password $APPLEIDPASS",
-    "release": "build"
+    "release": "yarn build"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
