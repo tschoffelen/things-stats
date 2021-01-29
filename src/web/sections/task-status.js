@@ -1,19 +1,25 @@
 module.exports = {
   title: 'Task statuses',
   render: async () => {
-    let rows = await db.query('SELECT status, COUNT(status) as c FROM TMTask WHERE type = 0 GROUP BY status')
-    let statuses = {}
+    const fromDate = Math.floor((new Date()).valueOf() / 1000) - 365 * 86400
+    let rows = await db.query(`SELECT status, startDate FROM TMTask WHERE type = 0 AND (stopDate IS NULL OR stopDate > ${fromDate})`)
+    let statuses = { 0: 0, 3: 0}
+    let scheduled = 0
     rows.forEach(row => {
-      statuses[parseInt(row.status)] = parseInt(row.c)
+      if(row.startDate && parseInt(row.status) === 0){
+        scheduled++;
+        return;
+      }
+      statuses[parseInt(row.status)]++
     })
 
     return {
       type: 'pie',
       data: {
-        labels: ['Open', 'Completed'],
+        labels: ['Open', 'Scheduled', 'Completed'],
         datasets: [{
-          data: [statuses[0] || 0, statuses[3] || 0],
-          backgroundColor: ['#4faef2', '#6bba69'],
+          data: [statuses[0] || 0, scheduled, statuses[3] || 0],
+          backgroundColor: ['#4faef2', '#f9d348', '#6bba69'],
           borderColor: '#212225',
           borderWidth: 5
         }]

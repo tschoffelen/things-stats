@@ -5,7 +5,7 @@ const os = require('os')
 
 let win
 
-const dbPath = os.homedir() + '/Library/Group Containers/JLMPQHK86H.com.culturedcode.ThingsMac/Things.sqlite3'
+const dbPath = os.homedir() + '/Library/Group Containers/JLMPQHK86H.com.culturedcode.ThingsMac/Things Database.thingsdatabase/main.sqlite'
 
 const getTasks = (event, arg) => {
   const db = new sqlite3.Database(path.resolve(dbPath), (err) => {

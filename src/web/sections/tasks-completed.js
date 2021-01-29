@@ -3,8 +3,9 @@ const moment = require('moment')
 module.exports = {
   title: 'Completed by month',
   render: async () => {
-    let rows = await db.query('SELECT stopDate FROM TMTask WHERE type = 0 AND status = 3')
-    let months = {
+    const fromDate = Math.floor((new Date()).valueOf() / 1000) - 365 * 86400
+    const rows = await db.query(`SELECT stopDate FROM TMTask WHERE type = 0 AND status = 3 AND stopDate > ${fromDate}`)
+    const months = {
       'January': 0,
       'February': 0,
       'March': 0,
