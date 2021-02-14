@@ -15,23 +15,19 @@
     "clean:dist": "rimraf ./dist/*",
     "build": "yarn clean:dist",
     "build:electron": "yarn clean:dist && electron-builder --mac -p never",
-    "build:mas": "yarn clean:dist && electron-builder --mac mas -p never",
-    "pub": "yarn build:mas && yarn upload:mas",
-    "upload:mas": "source .env && xcrun altool --upload-app --type osx --file \"$(find ./dist/mas/Things Stats*.pkg)\" --username $APPLEID --password $APPLEIDPASS",
     "release": "yarn build --publish always"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
-    "electron": "^9.4.0",
-    "electron-builder": "^22.7.0",
-    "electron-notarize": "^1.0.0",
-    "nodemon": "^1.18.11"
+    "electron": "^11.2.3",
+    "electron-builder": "^22.9.1",
+    "nodemon": "^2.0.7"
   },
   "dependencies": {
     "electron-builder-notarize": "^1.2.0",
     "electron-updater": "^4.3.5",
-    "moment": "^2.24.0",
-    "sqlite3": "^5.0.0"
+    "moment": "^2.29.1",
+    "sqlite3": "^5.0.1"
   },
   "build": {
     "appId": "co.schof.things-stats",
@@ -44,6 +40,11 @@
         "dmg",
         "zip"
       ],
+      "publish": {
+        "provider": "github",
+        "releaseType": "release",
+        "publishAutoUpdate": true
+      },
       "category": "public.app-category.productivity",
       "darkModeSupport": true,
       "gatekeeperAssess": false,
