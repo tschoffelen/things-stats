@@ -1,9 +1,9 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
+const { autoUpdater } = require("electron-updater");
 const sqlite3 = require('sqlite3');
 const path = require('path');
 const os = require('os');
 
-const autoUpdater = require("electron-updater");
 
 let win;
 
