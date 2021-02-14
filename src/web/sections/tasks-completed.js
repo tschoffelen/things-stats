@@ -30,7 +30,7 @@ module.exports = {
         labels: Object.keys(months),
         datasets: [{
           data: Object.values(months),
-          backgroundColor: '#4faef2'
+          backgroundColor: '#4dabf1'
         }]
       },
       options: {

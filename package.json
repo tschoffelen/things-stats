@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "start": "electron .",
-    "dev": "nodemon --watch src/* --exec 'electron .'",
+    "dev": "nodemon --exec 'electron .'",
     "postinstall": "electron-builder install-app-deps",
     "clean:dist": "rimraf ./dist/*",
     "build": "yarn clean:dist && electron-builder --mac -p never",

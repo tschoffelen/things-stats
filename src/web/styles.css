@@ -117,6 +117,12 @@ nav ::-webkit-scrollbar {
     font-weight: 500;
 }
 
+.calendar-duration {
+    font-size: 10px;
+    color: #ccc;
+    font-weight: 500;
+}
+
 .calendar-inner {
     display: flex;
     flex: 1;

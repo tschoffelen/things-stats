@@ -19,7 +19,7 @@ module.exports = {
         labels: ['Open', 'Scheduled', 'Completed'],
         datasets: [{
           data: [statuses[0] || 0, scheduled, statuses[3] || 0],
-          backgroundColor: ['#4faef2', '#f9d348', '#6bba69'],
+          backgroundColor: ['#4dabf1', '#f9d348', '#6bba69'],
           borderColor: '#212225',
           borderWidth: 5
         }]

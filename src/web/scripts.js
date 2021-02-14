@@ -26,8 +26,9 @@ const sections = [
   require('./sections/task-status'),
   require('./sections/tasks-due'),
   require('./sections/tasks-calendar'),
+  require('./sections/tasks-tags'),
   require('./sections/tasks-completed'),
-  require('./sections/tasks-weekday')
+  require('./sections/tasks-weekday'),
 ]
 
 const $nav = $('nav ul')
