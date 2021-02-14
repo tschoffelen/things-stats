@@ -1,6 +1,6 @@
 {
   "name": "things-stats",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Showing you stats about your Things tasks.",
   "main": "src/index.js",
   "author": "Thomas Schoffelen <thomas@schof.co>",
