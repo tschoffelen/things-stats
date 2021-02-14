@@ -14,8 +14,8 @@
     "build": "yarn clean:dist && electron-builder --mac -p never",
     "build:mas": "yarn clean:dist && electron-builder --mac mas -p never",
     "pub": "yarn build:mas && yarn upload:mas",
-    "upload:mas": "source .env && xcrun altool --upload-app --type osx --file \"$(find ./dist/mas/Bitwarden*.pkg)\" --username $APPLEID --password $APPLEIDPASS",
-    "release": "yarn build"
+    "upload:mas": "source .env && xcrun altool --upload-app --type osx --file \"$(find ./dist/mas/Things Stats*.pkg)\" --username $APPLEID --password $APPLEIDPASS",
+    "release": "yarn build --publish always"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "electron-builder-notarize": "^1.2.0",
+    "electron-updater": "^4.3.5",
     "moment": "^2.24.0",
     "sqlite3": "^5.0.0"
   },

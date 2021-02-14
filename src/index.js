@@ -1,39 +1,41 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
-const sqlite3 = require('sqlite3')
-const path = require('path')
-const os = require('os')
+const { app, BrowserWindow, ipcMain } = require('electron');
+const sqlite3 = require('sqlite3');
+const path = require('path');
+const os = require('os');
 
-let win
+const autoUpdater = require("electron-updater");
 
-const dbPath = os.homedir() + '/Library/Group Containers/JLMPQHK86H.com.culturedcode.ThingsMac/Things Database.thingsdatabase/main.sqlite'
+let win;
+
+const dbPath = os.homedir() + '/Library/Group Containers/JLMPQHK86H.com.culturedcode.ThingsMac/Things Database.thingsdatabase/main.sqlite';
 
 const getTasks = (event, arg) => {
   const db = new sqlite3.Database(path.resolve(dbPath), (err) => {
     if (err) {
-      event.sender.send('query-error', err.message)
-      return
+      event.sender.send('query-error', err.message);
+      return;
     }
 
-    const output = []
+    const output = [];
     db.serialize(() => {
       db.each(arg, (err, row) => {
         if (err) {
-          event.sender.send('query-error', err.message)
-          return
+          event.sender.send('query-error', err.message);
+          return;
         }
-        output.push(row)
-      })
-    })
+        output.push(row);
+      });
+    });
 
-    db.close()
+    db.close();
 
     setTimeout(() => {
-      event.sender.send('query-rows', output)
-    }, 200)
-  })
-}
+      event.sender.send('query-rows', output);
+    }, 200);
+  });
+};
 
-ipcMain.on('query', getTasks)
+ipcMain.on('query', getTasks);
 
 const createWindow = () => {
   // Create the browser window.
@@ -48,10 +50,10 @@ const createWindow = () => {
     webPreferences: {
       nodeIntegration: true
     }
-  })
+  });
 
   // and load the index.html of the app.
-  win.loadFile('src/web/index.html')
+  win.loadFile('src/web/index.html');
 
   // Open the DevTools.
   //win.webContents.openDevTools({ mode: 'detach' })
@@ -61,24 +63,27 @@ const createWindow = () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    win = null
-  })
-}
+    win = null;
+  });
+};
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', () => {
+  createWindow();
+  autoUpdater.checkForUpdatesAndNotify();
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
-  app.quit()
-})
+  app.quit();
+});
 
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (win === null) {
-    createWindow()
+    createWindow();
   }
-})
+});
