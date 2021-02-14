@@ -1,11 +1,13 @@
 {
   "name": "things-stats",
   "version": "1.0.2",
-  "private": true,
   "description": "Showing you stats about your Things tasks.",
   "main": "src/index.js",
   "author": "Thomas Schoffelen <thomas@schof.co>",
+  "repository": "github:tschoffelen/things-stats",
+  "homepage": "https://github.com/tschoffelen/things-stats",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "start": "electron .",
     "dev": "nodemon --exec 'electron .'",
@@ -40,8 +42,7 @@
       "icon": "build/icon.icns",
       "target": [
         "dmg",
-        "zip",
-        "mas"
+        "zip"
       ],
       "category": "public.app-category.productivity",
       "darkModeSupport": true,
@@ -55,14 +56,6 @@
     },
     "dmg": {
       "icon": "build/icon.icns"
-    },
-    "mas": {
-      "entitlements": "build/entitlements.mas.plist",
-      "entitlementsInherit": "build/entitlements.mas.inherit.plist",
-      "hardenedRuntime": false,
-      "asarUnpack": [
-        "node_modules/sqlite3"
-      ]
     }
   }
 }
