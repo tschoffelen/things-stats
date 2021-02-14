@@ -44,7 +44,6 @@
         "github"
       ],
       "category": "public.app-category.productivity",
-      "identity": "Thomas Schoffelen (AGKMBZTN3K)",
       "darkModeSupport": true,
       "gatekeeperAssess": false,
       "hardenedRuntime": true,
