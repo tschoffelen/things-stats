@@ -11,7 +11,8 @@
     "dev": "nodemon --exec 'electron .'",
     "postinstall": "electron-builder install-app-deps",
     "clean:dist": "rimraf ./dist/*",
-    "build": "yarn clean:dist && electron-builder --mac -p never",
+    "build": "yarn clean:dist",
+    "build:electron": "yarn clean:dist && electron-builder --mac -p never",
     "build:mas": "yarn clean:dist && electron-builder --mac mas -p never",
     "pub": "yarn build:mas && yarn upload:mas",
     "upload:mas": "source .env && xcrun altool --upload-app --type osx --file \"$(find ./dist/mas/Things Stats*.pkg)\" --username $APPLEID --password $APPLEIDPASS",
@@ -38,10 +39,9 @@
     "mac": {
       "icon": "build/icon.icns",
       "target": [
-        "zip"
-      ],
-      "publish": [
-        "github"
+        "dmg",
+        "zip",
+        "mas"
       ],
       "category": "public.app-category.productivity",
       "darkModeSupport": true,
@@ -52,6 +52,9 @@
       "extendInfo": {
         "ITSAppUsesNonExemptEncryption": false
       }
+    },
+    "dmg": {
+      "icon": "build/icon.icns"
     },
     "mas": {
       "entitlements": "build/entitlements.mas.plist",
