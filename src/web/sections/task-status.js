@@ -20,7 +20,7 @@ module.exports = {
         datasets: [{
           data: [statuses[0] || 0, scheduled, statuses[3] || 0],
           backgroundColor: ['#4dabf1', '#f9d348', '#6bba69'],
-          borderColor: '#212225',
+          borderColor: '#262626',
           borderWidth: 5
         }]
       },

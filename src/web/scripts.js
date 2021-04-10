@@ -25,8 +25,9 @@ window.db = {
 const sections = [
   require('./sections/task-status'),
   require('./sections/tasks-due'),
-  require('./sections/tasks-calendar'),
   require('./sections/tasks-tags'),
+  require('./sections/tasks-oldest'),
+  require('./sections/tasks-calendar'),
   require('./sections/tasks-completed'),
   require('./sections/tasks-weekday'),
 ]

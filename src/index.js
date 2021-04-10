@@ -56,7 +56,7 @@ const createWindow = () => {
   win.loadFile('src/web/index.html');
 
   // Open the DevTools.
-  //win.webContents.openDevTools({ mode: 'detach' })
+  // win.webContents.openDevTools({ mode: 'detach' })
 
   // Emitted when the window is closed.
   win.on('closed', () => {
