@@ -39,6 +39,13 @@ module.exports = {
             display: false
           }
         },
+        scales: {
+          xAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        },
         legend: {
           display: false
         }

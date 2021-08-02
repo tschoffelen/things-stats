@@ -1,11 +1,13 @@
-const moment = require('moment');
+const { format } = require('date-fns');
+const { startOfDay } = require('date-fns');
+const {startOfWeek, addDays, getUnixTime} = require('date-fns');
 const { formatTime, getTime } = require('../lib/time');
 
 module.exports = {
   title: 'Calendar',
   render: async() => {
-    let startDate = moment().startOf('isoWeek').unix();
-    let endDate = moment().startOf('isoWeek').add(5 * 7, 'days').unix();
+    let startDate = startOfWeek(new Date(), {weekStartsOn: 1});
+    let endDate = addDays(startDate, 5 * 7);
     let res = await db.query(`
       SELECT
         TMTask.uuid as id,
@@ -21,7 +23,7 @@ module.exports = {
         type = 0 AND
         status = 0 AND
         trashed = 0 AND
-        (startDate <= ${endDate} OR dueDate <= ${endDate} OR nextInstanceStartDate <= ${endDate})
+        (startDate <= ${getUnixTime(endDate)} OR dueDate <= ${getUnixTime(endDate)} OR nextInstanceStartDate <= ${getUnixTime(endDate)})
     `);
 
     const rows = Object.values(res.reduce((groups, row) => {
@@ -38,12 +40,13 @@ module.exports = {
       }
       return groups;
     }, {}));
-    console.log(rows);
+
     let days = {};
-    let firstIndex = Math.floor(moment().startOf('day').unix() / 86400);
-    while (startDate < endDate) {
+    let firstIndex = Math.floor(getUnixTime(startOfDay(new Date())) / 86400);
+    startDate = getUnixTime(startDate);
+    while (startDate < getUnixTime(endDate)) {
       const index = '' + Math.floor(startDate / 86400);
-      days[index] = [index < firstIndex ? '' : moment(startDate * 1000).format('ddd, MMM D'), 0, 0, 0, 0, []];
+      days[index] = [index < firstIndex ? '' : format(new Date(startDate * 1000 - 3600000), 'EEE, MMM d'), 0, 0, 0, 0, []];
       startDate += 86400;
     }
     rows.forEach(row => {

@@ -4,7 +4,6 @@ module.exports = {
   title: 'Oldest',
   render: async() => {
     const endDate = Math.floor(new Date().valueOf() / 1000) - 86400 * 30;
-    console.log(endDate);
     let rows = await db.query(`
       SELECT * FROM TMTask 
       WHERE 

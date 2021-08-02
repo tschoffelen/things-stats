@@ -61,6 +61,13 @@ module.exports = {
             display: false
           }
         },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        },
         legend: {
           display: false
         }
