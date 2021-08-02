@@ -3,7 +3,7 @@ const moment = require('moment')
 module.exports = {
   title: 'Due dates',
   render: async () => {
-    let rows = await db.query('SELECT start, startDate FROM TMTask WHERE type = 0 AND status = 0')
+    let rows = await db.query('SELECT start, startDate, title FROM TMTask WHERE type = 0 AND status = 0')
     let months = {
       'Today': 0,
       'Tomorrow': 0,
@@ -22,6 +22,9 @@ module.exports = {
     const nextWeek = moment().startOf('isoWeek').add(14, 'days').valueOf()
 
     rows.forEach(row => {
+      if (!row.title.replace(/[-–—\s]+/gi, '')) {
+        return
+      }
       if (!row.startDate) {
         months[row.start === 1 ? 'No date' : 'Someday']++
         return

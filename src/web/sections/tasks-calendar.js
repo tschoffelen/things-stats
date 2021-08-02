@@ -7,7 +7,7 @@ module.exports = {
   title: 'Calendar',
   render: async() => {
     let startDate = startOfWeek(new Date(), {weekStartsOn: 1});
-    let endDate = addDays(startDate, 5 * 7);
+    let endDate = addDays(startDate, 5 * 7 + 1);
     let res = await db.query(`
       SELECT
         TMTask.uuid as id,
@@ -42,7 +42,7 @@ module.exports = {
     }, {}));
 
     let days = {};
-    let firstIndex = Math.floor(getUnixTime(startOfDay(new Date())) / 86400);
+    let firstIndex = Math.floor((getUnixTime(startOfDay(new Date())) - 3600) / 86400);
     startDate = getUnixTime(startDate);
     while (startDate < getUnixTime(endDate)) {
       const index = '' + Math.floor(startDate / 86400);
@@ -51,6 +51,9 @@ module.exports = {
     }
     rows.forEach(row => {
       let added = false;
+	    if (!row.title.replace(/[-–—\s]+/gi, '')) {
+		    return;
+	    }
       if (row.startDate) {
         let unix = Math.floor(parseFloat(row.startDate) / 86400);
         if (unix < firstIndex) {
@@ -104,7 +107,7 @@ module.exports = {
 
     return `
       <div class="calendar-outer">
-        ${Object.values(days).map(([date, tasks, deadlines, repeating, duration]) => `
+        ${Object.values(days).slice(1).map(([date, tasks, deadlines, repeating, duration]) => `
           <div class="calendar-day">
             <span class="calendar-date">${date}</span>
             ${duration ? `<span class="calendar-duration">${formatTime(duration)}</span>` : ''}
