@@ -5,7 +5,7 @@
 html, body {
     margin: 0;
     padding: 0;
-    background: #262626;
+    background: #1e1e1e;
     -webkit-user-select: none;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     font-size: 13px;
@@ -18,10 +18,11 @@ body {
 }
 
 nav {
-    border-bottom: 1px solid #1a1b1a;
-    background: #1c1c1c;
+    border-bottom: 1px solid #0b0b0b;
+    background: #363636;
     height: 36px;
     position: fixed;
+    z-index: 1000;
     top: 0;
     left: 0;
     right: 0;
@@ -47,10 +48,10 @@ nav ul:after {
     position: fixed;
     left: 0;
     top: 0;
-    background-image: linear-gradient(90deg, rgba(27, 28, 31, 0.8) 75%, rgba(0, 0, 0, 0) 100%);
+    background-image: linear-gradient(90deg, #363636 75%, rgba(0, 0, 0, 0) 100%);
     content: '';
     width: 100px;
-    height: 36px;
+    height: 35px;
     pointer-events: none;
 }
 
@@ -58,10 +59,10 @@ nav ul:before {
     position: fixed;
     right: 0;
     top: 0;
-    background-image: linear-gradient(-90deg, rgba(27, 28, 31, 0.8) 0, rgba(0, 0, 0, 0) 100%);
+    background-image: linear-gradient(-90deg, #363636 0, rgba(0, 0, 0, 0) 100%);
     content: '';
     width: 48px;
-    height: 36px;
+    height: 35px;
     pointer-events: none;
 }
 
@@ -103,8 +104,8 @@ nav ::-webkit-scrollbar {
 
 .calendar-day {
     box-sizing: border-box;
-    border-right: 0.2px solid #1b1c1f;
-    border-bottom: 0.2px solid #1b1c1f;
+    border-right: 0.2px solid #343434;
+    border-bottom: 0.2px solid #343434;
     align-items: center;
     justify-content: flex-start;
     display: flex;
@@ -135,7 +136,7 @@ nav ::-webkit-scrollbar {
 
 .calendar-inner span {
     display: inline-block;
-    background: #1b1c1f no-repeat 8px 50%;
+    background: #343434 no-repeat 8px 50%;
     background-size: 12px;
     border-radius: 24px;
     line-height: 16px;
@@ -208,4 +209,86 @@ nav ::-webkit-scrollbar {
     font-weight: 700;
     color: #939393;
     margin: 2px 0;
+}
+
+.schedule-day {
+    padding: 1.6rem 0;
+    padding-bottom: 2rem;
+    margin: 0 2rem;
+    border-bottom: 1px solid rgba(70, 71, 70, 0.5);
+}
+
+.schedule-day:last-child {
+    border-bottom: 0;
+}
+
+.schedule-day__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.7rem;
+}
+
+.schedule-day__header .calendar-date {
+    font-size: 16px;
+    font-weight: 500;
+    flex: 1;
+    color: #eee;
+}
+
+.schedule-day__header .calendar-date span {
+    display: block;
+    margin-top: 0.1rem;
+    font-size: 11px;
+    font-weight: 400;
+    color: #999;
+}
+
+.schedule-day__header .calendar-inner {
+    width: auto;
+    flex: none;
+    justify-content: flex-end;
+    flex-direction: row;
+}
+
+.schedule-day__header .calendar-inner span {
+    margin-left: 0.4rem;
+}
+
+.schedule-day__timings {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.schedule-day__item {
+    display: inline-block;
+    height: 12px;
+    min-width: 12px;
+    background-color: #aaa;
+    margin-top: 0.44rem;
+    margin-right: 3px;
+    position: relative;
+    border-radius: 6px;
+    transition: all 0.1s ease;
+}
+
+.schedule-day__item:hover {
+    box-shadow: 0 0 1rem rgba(0,0,0,0.6);
+    z-index: 10;
+}
+
+.schedule-day__item.task {
+    background-color: #f9d448;
+}
+
+.schedule-day__item.deadline {
+    background-color: #e63958;
+}
+
+.schedule-day__item.repeating {
+    background-color: #4dabf1;
+}
+
+.schedule-day__divider {
+  width: 1rem;
 }

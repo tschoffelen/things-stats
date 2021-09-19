@@ -1,6 +1,4 @@
-const moment = require('moment')
-
-module.exports = {
+export default {
   title: 'Due dates',
   render: async () => {
     let rows = await db.query('SELECT start, startDate, title FROM TMTask WHERE type = 0 AND status = 0')
@@ -16,10 +14,10 @@ module.exports = {
 
     let colors = ['#f9d348', '#a38731', '#65aca4', '#50817c', '#395755', '#7dabf6', '#d1c794']
 
-    const today = moment().endOf('day').valueOf()
-    const tomorrow = moment().endOf('day').add(1, 'days').valueOf()
-    const thisWeek = moment().startOf('isoWeek').add(7, 'days').valueOf()
-    const nextWeek = moment().startOf('isoWeek').add(14, 'days').valueOf()
+    const today = dateFns.endOfDay(new Date()).valueOf()
+    const tomorrow =  dateFns.addDays(dateFns.endOfDay(new Date()),1).valueOf()
+    const thisWeek = dateFns.addDays(dateFns.startOfWeek(new Date()),7).valueOf()
+    const nextWeek = dateFns.addDays(dateFns.startOfWeek(new Date()),14).valueOf()
 
     rows.forEach(row => {
       if (!row.title.replace(/[-–—\s]+/gi, '')) {

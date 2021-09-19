@@ -1,41 +1,27 @@
-const { ipcRenderer } = require('electron')
-const $ = require('./vendor/jquery.min')
-
-window.db = {
-  query (query) {
-    return new Promise((resolve, reject) => {
-      let responded = false
-      ipcRenderer.once('query-rows', (event, arg) => {
-        if (responded) return
-        responded = true
-        resolve(arg)
-      })
-
-      ipcRenderer.once('query-error', (event, arg) => {
-        if (responded) return
-        responded = true
-        reject(arg)
-      })
-
-      ipcRenderer.send('query', query)
-    })
-  }
-}
+import TasksSchedule from './sections/tasks-schedule.js'
+import TasksStatus from './sections/tasks-status.js'
+import TasksDue from './sections/tasks-due.js'
+import TasksTags from './sections/tasks-tags.js'
+import TasksOldest from './sections/tasks-oldest.js'
+import TasksCalendar from './sections/tasks-calendar.js'
+import TasksCompleted from './sections/tasks-completed.js'
+import TasksWeekday from './sections/tasks-weekday.js'
 
 const sections = [
-  require('./sections/task-status'),
-  require('./sections/tasks-due'),
-  require('./sections/tasks-tags'),
-  require('./sections/tasks-oldest'),
-  require('./sections/tasks-calendar'),
-  require('./sections/tasks-completed'),
-  require('./sections/tasks-weekday'),
+  TasksSchedule,
+  TasksStatus,
+  TasksDue,
+  TasksTags,
+  TasksOldest,
+  TasksCalendar,
+  TasksCompleted,
+  TasksWeekday
 ]
 
 const $nav = $('nav ul')
 const $body = $('.inner')
 
-const renderSection = async (sectionIndex) => {
+window.renderSection = async (sectionIndex) => {
   const section = sections[sectionIndex]
 
   $body.html('<div class="graph-outer"><canvas id="myChart" width="400" height="300"></canvas></div>')

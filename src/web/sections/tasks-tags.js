@@ -1,6 +1,4 @@
-const moment = require('moment')
-
-module.exports = {
+export default {
   title: 'Tags',
   render: async () => {
     const fromDate = Math.floor((new Date()).valueOf() / 1000) - 365 * 86400

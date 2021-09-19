@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   title: 'Task statuses',
   render: async () => {
     const fromDate = Math.floor((new Date()).valueOf() / 1000) - 365 * 86400

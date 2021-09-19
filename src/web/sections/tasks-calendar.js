@@ -1,14 +1,13 @@
-const { format } = require('date-fns');
-const { startOfDay } = require('date-fns');
-const {startOfWeek, addDays, getUnixTime} = require('date-fns');
-const { formatTime, getTime } = require('../lib/time');
+import { formatTime, getTime } from '../lib/time.js';
 
-module.exports = {
-  title: 'Calendar',
-  render: async() => {
-    let startDate = startOfWeek(new Date(), {weekStartsOn: 1});
-    let endDate = addDays(startDate, 5 * 7 + 1);
-    let res = await db.query(`
+const { format, startOfDay, startOfWeek, addDays, getUnixTime } = window.dateFns;
+
+export default {
+	title: 'Calendar',
+	render: async() => {
+		let startDate = startOfWeek(new Date(), { weekStartsOn: 1 });
+		let endDate = addDays(startDate, 5 * 7);
+		let res = await db.query(`
       SELECT
         TMTask.uuid as id,
         TMTask.title,
@@ -26,88 +25,86 @@ module.exports = {
         (startDate <= ${getUnixTime(endDate)} OR dueDate <= ${getUnixTime(endDate)} OR nextInstanceStartDate <= ${getUnixTime(endDate)})
     `);
 
-    const rows = Object.values(res.reduce((groups, row) => {
-      if (!(row.id in groups)) {
-        groups[row.id] = {
-          ...row,
-          tags: [],
-          duration: 0
-        };
-      }
-      if (row.tag) {
-        groups[row.id].tags.push(row.tag);
-        groups[row.id].duration += getTime(row.tag);
-      }
-      return groups;
-    }, {}));
+		const rows = Object.values(res.reduce((groups, row) => {
+			if (!(row.id in groups)) {
+				groups[row.id] = {
+					...row,
+					tags: [],
+					duration: 0
+				};
+			}
+			if (row.tag) {
+				groups[row.id].tags.push(row.tag);
+				groups[row.id].duration += getTime(row.tag);
+			}
+			return groups;
+		}, {}));
 
-    let days = {};
-    let firstIndex = Math.floor((getUnixTime(startOfDay(new Date())) - 3600) / 86400);
-    startDate = getUnixTime(startDate);
-    while (startDate < getUnixTime(endDate)) {
-      const index = '' + Math.floor(startDate / 86400);
-      days[index] = [index < firstIndex ? '' : format(new Date(startDate * 1000 - 3600000), 'EEE, MMM d'), 0, 0, 0, 0, []];
-      startDate += 86400;
-    }
-    rows.forEach(row => {
-      let added = false;
-	    if (!row.title.replace(/[-–—\s]+/gi, '')) {
-		    return;
-	    }
-      if (row.startDate) {
-        let unix = Math.floor(parseFloat(row.startDate) / 86400);
-        if (unix < firstIndex) {
-          unix = firstIndex;
-        }
-        if ('' + unix in days) {
-          days['' + unix][1]++;
-          if (!added) {
-            added = true;
-            days['' + unix][5].push(row);
-            days['' + unix][4] += row.duration;
-          }
-        }
-        if (row.dueDate && row.dueDate < row.startDate) {
-          return;
-        }
-      }
-      if (row.dueDate) {
-        let unix = Math.floor(parseFloat(row.dueDate) / 86400);
-        if (unix < firstIndex) {
-          unix = firstIndex;
-        }
-        if ('' + unix in days) {
-          days['' + unix][2]++;
-          if (!added) {
-            added = true;
-            days['' + unix][5].push(row);
-            days['' + unix][4] += row.duration;
-          }
-        }
-        if (row.dueDate <= row.startDate) {
-          return;
-        }
-      }
-      if (row.nextInstanceStartDate) {
-        if (row.startDate && row.nextInstanceStartDate <= row.startDate) {
-          return;
-        }
-        let unix = Math.floor(parseFloat(row.nextInstanceStartDate) / 86400);
-        if ('' + unix in days) {
-          days['' + unix][3]++;
-          if (!added) {
-            days['' + unix][5].push(row);
-            days['' + unix][4] += row.duration;
-          }
-        }
-      }
-    });
+		let days = {};
+		let firstIndex = Math.floor((getUnixTime(startOfDay(new Date()))) / 86400 + 0.4);
+		startDate = getUnixTime(startDate);
+		while (startDate < getUnixTime(endDate)) {
+			const index = '' + Math.floor(startDate / 86400 + 0.4);
+			days[index] = [index < firstIndex ? '' : format(new Date(startDate * 1000), 'EEE, MMM d'), 0, 0, 0, 0, []];
+			startDate += 86400;
+		}
+		rows.forEach(row => {
+			let added = false;
+			if (row.title.includes('———')) {
+				return;
+			}
+			if (row.startDate) {
+				let unix = Math.floor(parseFloat(row.startDate) / 86400);
+				if (unix < firstIndex) {
+					unix = firstIndex;
+				}
+				if ('' + unix in days) {
+					days['' + unix][1]++;
+					if (!added) {
+						added = true;
+						days['' + unix][5].push(row);
+						days['' + unix][4] += row.duration;
+					}
+				}
+				if (row.dueDate && row.dueDate < row.startDate) {
+					return;
+				}
+			}
+			if (row.dueDate) {
+				let unix = Math.floor(parseFloat(row.dueDate) / 86400);
+				if (unix < firstIndex) {
+					unix = firstIndex;
+				}
+				if ('' + unix in days) {
+					days['' + unix][2]++;
+					if (!added) {
+						added = true;
+						days['' + unix][5].push(row);
+						days['' + unix][4] += row.duration;
+					}
+				}
+				if (row.dueDate <= row.startDate) {
+					return;
+				}
+			}
+			if (row.nextInstanceStartDate) {
+				if (row.startDate && row.nextInstanceStartDate <= row.startDate) {
+					return;
+				}
+				let unix = Math.floor(parseFloat(row.nextInstanceStartDate) / 86400);
+				if ('' + unix in days) {
+					days['' + unix][3]++;
+					if (!added) {
+						days['' + unix][5].push(row);
+						days['' + unix][4] += row.duration;
+					}
+				}
+			}
+		});
 
-    console.log(days);
-
-    return `
+		return `
       <div class="calendar-outer">
-        ${Object.values(days).slice(1).map(([date, tasks, deadlines, repeating, duration]) => `
+        ${Object.values(days).map(([date, tasks, deadlines, repeating, duration]) => `
           <div class="calendar-day">
             <span class="calendar-date">${date}</span>
             ${duration ? `<span class="calendar-duration">${formatTime(duration)}</span>` : ''}
@@ -120,5 +117,5 @@ module.exports = {
         `).join('')}
       </div>
     `;
-  }
+	}
 };

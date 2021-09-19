@@ -1,4 +1,4 @@
-const getTime = (tag) => {
+export const getTime = (tag) => {
   if (tag.match(/^\d+min$/i)) {
     return Number(tag.replace(/min$/i, '')) || 0;
   }
@@ -14,14 +14,9 @@ const getTime = (tag) => {
   return 0;
 };
 
-const formatTime = (duration) => {
+export const formatTime = (duration) => {
   if (duration >= 60) {
     return `${Math.round(duration / 60 * 10) / 10} hr`;
   }
   return `${duration} min`;
-};
-
-module.exports = {
-  getTime,
-  formatTime
 };

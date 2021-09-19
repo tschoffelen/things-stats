@@ -1,6 +1,4 @@
-const moment = require('moment');
-
-module.exports = {
+export default {
   title: 'Oldest',
   render: async() => {
     const endDate = Math.floor(new Date().valueOf() / 1000) - 86400 * 30;
@@ -31,8 +29,8 @@ module.exports = {
       if (tasks.length > 20) {
         return;
       }
-      const date = moment(Math.round(parseFloat(creationDate)) * 1000);
-      const year = date.format('YYYY');
+      const date = new Date(Math.round(parseFloat(creationDate)) * 1000);
+      const year = dateFns.format(date, 'yyyy');
       if (lastYear !== year) {
         tasks.push(`
           <li>
@@ -50,7 +48,7 @@ module.exports = {
               ${title}
             </div>
             <div class="tasks__subtitle">
-              Created ${date.calendar()}
+              Created ${dateFns.format(date, 'P')}
             </div>
           </a>
         </li>
