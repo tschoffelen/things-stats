@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "dotenv": "^10.0.0",
-    "electron": "^15.5.5",
+    "electron": "^18.3.7",
     "electron-builder": "^22.11.7",
     "nodemon": "^2.0.12"
   },
